@@ -1,0 +1,52 @@
+version: '3.6'
+
+services:
+
+  space-cloud:
+    image: spaceuptech/space-cloud
+    restart: always
+    ports:
+    - "4122:4122"
+    - "4126:4126"
+    environment:
+      DEV: "false"
+      ADMIN_USER: "admin"
+      ADMIN_PASS: "senha123"
+      ADMIN_SECRET: "some-secret"
+      #CONFIG: /config/config.yaml
+    volumes:
+      - space_data:/storage
+      # /path/to/config.yaml:/config/config.yaml
+    networks:
+     - backend
+
+  mongo:
+    image: mongo
+    restart: always
+    networks:
+     - backend
+    volumes:
+      - db_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Passw0rd
+      #mongodb://root:Passw0rd@mongo:27017
+
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+     - backend
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: Passw0rd
+
+volumes:
+  db_data:
+  space_data:
+
+networks:
+  backend:

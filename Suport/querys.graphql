@@ -1,0 +1,116 @@
+mutation {
+  insert_cliente(
+    docs: [
+      { 
+        nome: "Joao",
+        nomeCompleto: "Joao Ernesto Arzamendia",
+        dataNascimento: "1992-02-04T10:15:30Z",
+        telefone: 67991211221,
+        eMail: "jearzamendia@gmail.com",
+        agendas: ""
+        },{
+         nome: "Juliana",
+        nomeCompleto: "Juliana Ramirez Arzamendia",
+        dataNascimento: "1991-02-04T10:15:30Z",
+        telefone: 67991211221,
+        eMail: "jearzamendia@gmail.com",
+        agendas: ""
+      },{
+        nome: "Adelaide",
+        nomeCompleto: "Adelaide Ramirez",
+        dataNascimento: "1989-05-25T10:15:30Z",
+        telefone: 67991211221,
+        eMail: "adelaide@gmail.com",
+        agendas: ""
+      }
+    ]
+  ) @mongo {
+    status
+  }
+}
+
+mutation {
+  insert_produto(
+    docs: [
+      { 
+        nome: "Depilação Completa",
+        descricao: "Depilação completa com cera de chocolate",
+        valor: 20,
+        duracao: 300
+        },{ 
+        nome: "Extsão de Cílios Tufinho",
+        descricao: "Extensão ce cílios do tipo tufinho",
+        valor: 80,
+        duracao: 600
+        }
+    ]
+  ) @mongo {
+    status
+  }
+}
+
+mutation {
+  insert_profissional(
+    docs: [
+      { 
+        nome: "Juliana",
+        nomeCompleto: "Juliana Ramire da Costa Arzamendia",
+        dataNascimento: "1992-02-04T10:15:30Z",
+        telefone: 6799121121,
+        eMail: "juliana@gmail.com",
+        dataAdmissao: "1992-02-04T10:15:30Z"
+        }
+    ]
+  ) @mongo {
+    status
+  }
+}
+
+
+mutation {
+  insert_tipoPagamento(
+    docs: [
+      { 
+        nome: "Cartão Credito",
+        descricao: "Cartão de crédito com taxa.",
+        taxa: 5
+        },{ 
+        nome: "Dinheiro",
+        descricao: "Dinheiro vivo.",
+        taxa: 0,00
+        }
+    ]
+  ) @mongo {
+    status
+  }
+}
+
+
+
+type tipoPagamento {
+    id: ID! @primary
+    nome: String!
+    descricao: String!
+    taxa: float!
+}
+
+mutation {
+  delete_cliente(
+    where: { nome: {_eq: "Joao"}}
+  ) @mongo {
+    status
+  }
+}
+
+query {
+  cliente @mongodb {
+    _id
+    nome,
+    nomeCompleto,
+    dataNascimento,
+    telefone,
+    eMail,
+    agendas,
+  }
+}
+

@@ -1,0 +1,55 @@
+#Basics
+
+type cliente {
+    id: ID! @primary
+    nome: String!
+    nomeCompleto: String!
+    dataNascimento: DateTime!
+    telefone: Integer!
+    eMail: String!
+}
+
+type profissional { 
+    id: ID! @primary
+    nome: String!
+    nomeCompleto: String!
+    dataNascimento: DateTime!
+    telefone: Integer!
+    eMail: String!
+    dataAdmissao: DateTime!
+}
+
+type produto {
+    id: ID! @primary
+    nome: String!
+    descricao: String!
+    valor: Integer!
+    duracao: Integer!
+}
+
+type tipoPagamento {
+    id: ID! @primary
+    nome: String!
+    descricao: String!
+    taxa: Float!
+}
+
+type agenda {
+    id: ID! @primary
+    dataAgendamento: DateTime!
+    dataInclusao: DateTime!
+    dataAplicacao: DateTime
+    descricao: String
+    tipoPagamento_id: tipoPagamento! @relation(field: "id")
+    cliente_id: ID!
+    produto_id: ID!
+    profissional_id: ID!
+    estapronto: Boolean
+    
+}
+
+type agendamento {
+  id: ID! @primary
+  agenda_id:  ID!
+  cliente_id: ID!
+}

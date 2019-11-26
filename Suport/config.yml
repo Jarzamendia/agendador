@@ -1,0 +1,193 @@
+projects:
+- secret: 76495dac-b6ca-45a1-9745-1f6b05d9fcf3
+  id: agendador
+  name: Agendador
+  modules:
+    crud:
+      mongo:
+        conn: mongodb://root:Passw0rd@mongo:27017
+        collections:
+          agenda:
+            isRealtimeEnabled: true
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: |-
+              type agenda {
+                  id: ID! @primary
+                  data: DateTime!
+                  dataInclusao: DateTime!
+                  dataAplicacao: DateTime
+                  descricao: String
+                  tipoPagamento: tipoPagamento! @relation(field: "id")
+                  duracao: Integer!
+                  cliente: cliente! @relation(field: "id")
+                  produto: produto! @relation(field: "id")
+                  estado: bool
+                  profissional: profissional! @relation(field: "id")
+              }
+          agendamento:
+            isRealtimeEnabled: true
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: |-
+              type agendamento {
+                id: ID! @primary
+                agenda: agenda! @relation(field: "id")
+                cliente: cliente! @relation(field: "id")
+              }
+          cliente:
+            isRealtimeEnabled: true
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: |-
+              type cliente {
+                  id: ID! @primary
+                  nome: String!
+                  nomeCompleto: String!
+                  dataNascimento: DateTime!
+                  telefone: Integer!
+                  eMail: String!
+                  agendas: [agenda] @relation
+              }
+          default:
+            isRealtimeEnabled: false
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: ""
+          event_logs:
+            isRealtimeEnabled: false
+            rules: {}
+            schema: |-
+              type event_logs {
+                _id: ID! @primary
+                batchid: String
+                type: String
+                token: Integer
+                timestamp: Integer
+                event_timestamp: Integer
+                payload: String
+                status: String
+                retries: Integer
+                url: String
+                remark: String
+              }
+          produto:
+            isRealtimeEnabled: true
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: |-
+              type produto {
+                  id: ID! @primary
+                  nome: String!
+                  descricao: String!
+                  valor: Integer!
+                  duracao: Integer!
+              }
+          profissional:
+            isRealtimeEnabled: true
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: |-
+              type profissional {
+                  id: ID! @primary
+                  nome: String!
+                  nomeCompleto: String!
+                  dataNascimento: DateTime!
+                  telefone: Integer!
+                  eMail: String!
+                  dataAdmissao: DateTime!
+              }
+          tipoPagamento:
+            isRealtimeEnabled: true
+            rules:
+              create:
+                rule: allow
+              delete:
+                rule: allow
+              read:
+                rule: allow
+              update:
+                rule: allow
+            schema: |-
+              type tipoPagamento {
+                  id: ID! @primary
+                  nome: String!
+                  descricao: String!
+                  taxa: float!
+              }
+        isPrimary: false
+        enabled: true
+    auth: {}
+    services:
+      externalServices: {}
+      internalServices: {}
+    fileStore:
+      enabled: false
+      storeType: ""
+      conn: ""
+      endpoint: ""
+      bucket: ""
+      rules: []
+    eventing:
+      enabled: true
+      dbType: mongo
+      col: event_logs
+      rules: {}
+ssl:
+  enabled: false
+  crt: ""
+  key: ""
+admin:
+  secret: some-secret
+  operation:
+    mode: 0
+    userId: ""
+    key: ""
+  users:
+  - user: admin
+    pass: senha123
+    scopes:
+      all:
+      - all
