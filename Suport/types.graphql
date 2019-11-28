@@ -1,55 +1,67 @@
-#Basics
+###################
 
-type cliente {
+type user {
     id: ID! @primary
-    nome: String!
-    nomeCompleto: String!
-    dataNascimento: DateTime!
-    telefone: Integer!
-    eMail: String!
+    email: String!
+    username: String! @unique
+    pass: String
+    role: String
+    completename: String!
+    birthday: DateTime!
+    phone: Integer!
+    createdat: DateTime! @createdAt
+    updatedat: DateTime! @updatedAt
 }
 
-type profissional { 
+###################
+
+type worker { 
     id: ID! @primary
-    nome: String!
-    nomeCompleto: String!
-    dataNascimento: DateTime!
-    telefone: Integer!
-    eMail: String!
-    dataAdmissao: DateTime!
+    name: String!
+    completename: String!
+    birthday: DateTime!
+    phone: Integer!
+    email: String!
+    admissiondate: DateTime!
+    createdat: DateTime! @createdAt
+    updatedat: DateTime! @updatedAt
 }
 
-type produto {
+###################
+
+type product {
     id: ID! @primary
-    nome: String!
-    descricao: String!
-    valor: Integer!
-    duracao: Integer!
+    name: String!
+    description: String!
+    value: Integer!
+    duration: Integer!
+    createdat: DateTime! @createdAt
+    updatedat: DateTime! @updatedAt
 }
 
-type tipoPagamento {
+###################
+
+type payment {
     id: ID! @primary
-    nome: String!
-    descricao: String!
-    taxa: Float!
+    name: String!
+    description: String!
+    tax: Float!
+    createdat: DateTime! @createdAt
+    updatedat: DateTime! @updatedAt
 }
+
+###################
 
 type agenda {
     id: ID! @primary
-    dataAgendamento: DateTime!
-    dataInclusao: DateTime!
-    dataAplicacao: DateTime
-    descricao: String
-    tipoPagamento_id: tipoPagamento! @relation(field: "id")
-    cliente_id: ID!
-    produto_id: ID!
-    profissional_id: ID!
-    estapronto: Boolean
-    
-}
-
-type agendamento {
-  id: ID! @primary
-  agenda_id:  ID!
-  cliente_id: ID!
+    scheduledate: DateTime!
+    applicationdate: DateTime
+    description: String
+    is_completed: Boolean
+    payment_id: tipopagamento! @relation(field: "id")
+    user_id: user! @relation(field: "id")
+    product_id: produto! @relation(field: "id")
+    worker_id: profissional! @relation(field: "id")
+    createdat: DateTime! @createdAt
+    updatedat: DateTime! @updatedAt
 }
